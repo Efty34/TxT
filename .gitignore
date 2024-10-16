@@ -49,3 +49,6 @@ macos
 web
 windows
 lib/mine.dart
+lib/firebase_options.dart
+android/app/google-services.json
+firebase.json
