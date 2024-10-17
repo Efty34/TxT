@@ -33,10 +33,12 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           capitalizedPrefix,
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.onTertiary,
+              fontWeight: FontWeight.w600),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: Theme.of(context).colorScheme.outline,
       ),
       drawer: const MyDrawer(),
       body: _buildUserList(),
@@ -97,6 +99,7 @@ class HomePage extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ChatPage(
                 receiverEmail: userData["email"],
+                receiverID: userData["uid"],
               ),
             ),
           );

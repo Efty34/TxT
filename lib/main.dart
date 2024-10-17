@@ -1,13 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:txt/services/auth/auth_gate.dart';
+import 'package:provider/provider.dart';
 import 'package:txt/firebase_options.dart';
-import 'package:txt/themes/light_mode.dart';
+import 'package:txt/services/auth/auth_gate.dart';
+import 'package:txt/themes/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const AuthGate(),
-      theme: lightMode,
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }
@@ -40,6 +46,10 @@ class MyApp extends StatelessWidget {
   --> add these before start the chat functionality
   ---------------
   flutter pub add cloud_firestore
+  ---------------
+  --> provider
+  ---------------
+  flutter pub add provider
 
 
 */
