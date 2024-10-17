@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:txt/auth/auth_service.dart';
 import 'package:txt/components/my_button.dart';
 import 'package:txt/components/my_textfield.dart';
 import 'package:txt/utils/app_media.dart';
@@ -14,8 +15,69 @@ class RegisterPage extends StatelessWidget {
 
   RegisterPage({super.key, this.onTap});
 
-  // login function
-  void register() {}
+  // register function
+  Future<void> register(BuildContext context) async {
+    // check if password and confirm password are the same
+    if (_pwController.text != _confirmPwController.text) {
+      // show error dialog
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Error"),
+            content: const Text("Passwords do not match"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  "OK",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // register user
+      // get auth service
+      final _auth = AuthService();
+
+      // try register
+      try {
+        await _auth.signUpWithEmailPassword(
+          _emailController.text,
+          _pwController.text,
+        );
+      } catch (e) {
+        // show error dialog
+        showDialog(
+          // ignore: use_build_context_synchronously
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("Error"),
+              content: Text(e.toString()),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    "OK",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +146,7 @@ class RegisterPage extends StatelessWidget {
             // --> login button
             MyButton(
               text: "Resgister",
-              onTap: register,
+              onTap: () => register(context),
             ),
 
             const SizedBox(

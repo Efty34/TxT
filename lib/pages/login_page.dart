@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:txt/auth/auth_service.dart';
 import 'package:txt/components/my_button.dart';
 import 'package:txt/components/my_textfield.dart';
 import 'package:txt/utils/app_media.dart';
@@ -14,7 +15,41 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key, this.onTap});
 
   // login function
-  void login() {}
+  void login(BuildContext context) async {
+    // get auth service
+    final authService = AuthService();
+
+    // try login
+    try {
+      await authService.signInWithEmailPassword(
+        _emailController.text,
+        _pwController.text,
+      );
+    } catch (e) {
+      // show error dialog
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Error"),
+            content: Text(e.toString()),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  "OK",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +99,7 @@ class LoginPage extends StatelessWidget {
             // login button
             MyButton(
               text: "Login",
-              onTap: login,
+              onTap: () => login(context),
             ),
 
             const SizedBox(height: 25),
