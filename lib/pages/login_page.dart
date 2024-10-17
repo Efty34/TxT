@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:txt/auth/auth_service.dart';
+import 'package:txt/services/auth/auth_service.dart';
 import 'package:txt/components/my_button.dart';
 import 'package:txt/components/my_textfield.dart';
 import 'package:txt/utils/app_media.dart';

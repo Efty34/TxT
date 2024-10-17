@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:txt/auth/auth_gate.dart';
+import 'package:txt/services/auth/auth_gate.dart';
 import 'package:txt/firebase_options.dart';
 import 'package:txt/themes/light_mode.dart';
 
@@ -37,6 +37,9 @@ class MyApp extends StatelessWidget {
   ---------------
   flutter pub add firebase_auth
   ---------------
+  --> add these before start the chat functionality
+  ---------------
+  flutter pub add cloud_firestore
 
 
 */
